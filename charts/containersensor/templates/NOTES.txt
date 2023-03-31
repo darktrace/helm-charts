@@ -1,0 +1,9 @@
+-------------------------------------------------
+          Darktrace containerSensor v{{ .Chart.Version }}
+-------------------------------------------------
+
+Thanks for installing containerSensor on Kubernetes!
+
+For more info see: https://github.com/darktrace-com/helm-charts/containerSensor
+
+For support please contact your Darktrace representative or visit: https://customerportal.darktrace.com/login

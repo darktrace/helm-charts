@@ -1,0 +1,16 @@
+{{- if .Values.containerSensor.configMap.create }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: darktrace-containersensor-config
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "containersensor.labels" . | nindent 4 }}
+  {{- with .Values.containerSensor.annotations }}
+  annotations:
+    {{ . | toYaml }}
+  {{- end }}
+data:
+  default-config.yml: |
+    {{- .Values.containerSensor.config.defaultConfig | trim | nindent 4 }}
+{{- end }}

@@ -1,0 +1,16 @@
+{{- if .Values.containerSensor.clusterRole }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: darktrace-containersensor-pod-reader
+  labels:
+    {{- include "containersensor.labels" . | nindent 4 }}
+  {{- if .Values.containerSensor.annotations }}
+  annotations: 
+    {{ .Values.containerSensor.annotations | toYaml }}
+  {{- end }}
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services"]
+  verbs: ["get", "watch", "list"]
+{{- end }}

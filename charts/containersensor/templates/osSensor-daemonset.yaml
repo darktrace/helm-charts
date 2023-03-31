@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: darktrace-ossensor
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "containersensor.labels" . | nindent 4 }}
+  {{- with .Values.osSensor.annotations }}
+  annotations:
+    {{ . | toYaml }}
+  {{- end }}
+spec:
+  selector:
+    matchLabels:
+      name: darktrace-ossensor
+      {{- include "containersensor.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        name: darktrace-ossensor
+        {{- include "containersensor.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.osSensor.nodeSelector }}
+      nodeSelector:
+        {{- . | toYaml | nindent 8 }}
+      {{- end }}
+      {{- with .Values.osSensor.tolerations }}
+      tolerations:
+        {{- . | toYaml | nindent 6 }}
+      {{- end }}
+      hostNetwork: true
+      terminationGracePeriodSeconds: 30
+      containers:
+      - name: ossensor
+        image: {{ .Values.osSensor.image.name }}:{{ .Values.osSensor.image.tag }}
+        imagePullPolicy: {{ .Values.osSensor.image.pullPolicy }}
+        {{- if .Values.osSensor.pullSecrets }}
+        imagePullSecrets:
+          {{- range .Values.osSensor.pullSecrets }}
+          - {{.}}
+          {{- end }}
+        {{- end }}
+        resources:
+        {{- if .Values.osSensor.resources }}
+          {{ .Values.osSensor.resources | trim | toYaml | nindent 10 }}
+        {{- else }}
+          requests:
+            cpu: 200m
+            memory: 256Mi
+          limits:
+            cpu: 200m
+            memory: 256Mi
+        {{- end }}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+            add:
+              - NET_ADMIN
+              - NET_BIND_SERVICE
+              - NET_RAW
+        env:
+        - name: VSENSOR_HOSTNAME
+          value: "{{ .Values.vSensorHostname }}"
+        - name: VSENSOR_HMAC_KEY
+          valueFrom:
+            secretKeyRef:
+              name: darktrace-ossensor-secret
+              key: VSENSOR_HMAC_KEY
+        {{- with .Values.osSensor.config.logLevel }}
+        - name: OSSENSOR_DEBUG
+          value: "{{ . }}"
+        {{- end }}
+        {{- with .Values.osSensor.config.antigena.enabled }}
+        - name: ANTIGENA_ENABLED
+          value: "{{ . }}"
+        {{- end }}
+        {{- if and .Values.osSensor.config.antigena.enabled .Values.osSensor.config.antigena.timePeriod }}
+        - name: ANTIGENA_TIME_PERIOD
+          value: "{{ .Values.osSensor.config.antigena.timePeriod }}"
+        {{- end }}
+        {{- with .Values.osSensor.config.networking.captureDevice }}
+        - name: OSSENSOR_NETWORK_DEVICE
+          value: "{{ . }}"
+        {{- end }}
+        - name: NETWORK_DEVICE_EXCLUDELIST
+          value: "{{ range .Values.osSensor.config.networking.interfaces.exclude }}{{ . }} {{ end -}}"
+        - name: NETWORK_DEVICE_INCLUDELIST
+          value: "{{ range .Values.osSensor.config.networking.interfaces.include }}{{ . }} {{ end -}}"
+        {{- with .Values.osSensor.config.networking.bpf }}
+        - name: BPF
+          value: "{{ . }}"
+        {{- end }}
+        {{- if .Values.osSensor.extraEnvs }}
+          {{- range $k, $v := .Values.osSensor.extraEnvs }}
+        - name: {{ $k }}
+          value: "{{ $v }}"
+          {{- end}}
+        {{- end }}

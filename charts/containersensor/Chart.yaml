@@ -1,0 +1,24 @@
+apiVersion: v2
+name: containersensor
+description: Used by Darktrace/DETECT customers to install containerSensor & optionally osSensor in their Kubernetes clusters
+
+icon: https://avatars.githubusercontent.com/u/54311122?s=200&v=4
+
+type: application
+
+version: 1.0.0
+
+keywords:
+  - Darktrace
+  - DETECT
+  - containerSensor
+  - osSensor
+
+sources:
+  - https://hub.docker.com/r/darktrace/containersensor
+  - https://hub.docker.com/r/darktrace/ossensor
+
+maintainers:
+  - name: Darktrace
+    email: support@darktrace.com
+    url: https://darktrace.com

@@ -1,0 +1,81 @@
+{{- if .Values.containerSensor.create }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: darktrace-containersensor
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "containersensor.labels" . | nindent 4 }}
+  {{- with .Values.containerSensor.annotations }}
+  annotations:
+    {{ . | toYaml }}
+  {{- end }}
+spec:
+  replicas: {{ .Values.containerSensor.podReplicas }}
+  selector:
+    matchLabels:
+      app: darktrace-containersensor
+      {{- include "containersensor.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: darktrace-containersensor
+        {{- include "containersensor.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: darktrace-containersensor
+      automountServiceAccountToken: true
+      volumes:
+        - name: subscriber-config
+          configMap: 
+            name: darktrace-containersensor-config
+      containers:
+        - name: containersensor
+          image: {{ .Values.containerSensor.image.name }}:{{ .Values.containerSensor.image.tag }}
+          imagePullPolicy: {{ .Values.containerSensor.image.pullPolicy }}
+          {{- if .Values.containerSensor.pullSecrets }}
+          imagePullSecrets:
+            {{- range .Values.containerSensor.pullSecrets }}
+            - {{.}}
+            {{- end }}
+          {{- end }}
+          resources:
+          {{- if .Values.containerSensor.resources }}
+            {{ .Values.containerSensor.resources | trim | toYaml | nindent 12 }}
+          {{- else }}
+            requests:
+              cpu: 200m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 64Mi
+          {{- end }}
+          volumeMounts:
+            - name: subscriber-config
+              mountPath: /etc/darktrace-metadata-watcher/subscribers.d/kubernetes/default-config.yml
+              subPath: default-config.yml
+          securityContext:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            runAsUser: 998
+            runAsNonRoot: true
+            capabilities:
+              drop:
+                - ALL
+          env:
+            - name: PROVISION_CONFIG
+              value: "{{ .Values.containerSensor.config.provisionConfig }}"
+            - name: DARKTRACE_URL
+              value: {{ .Values.vSensorHostname }}
+            - name: DARKTRACE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: darktrace-containersensor-secret
+                  key: token
+            {{- if .Values.containerSensor.extraEnvs }}
+              {{- range $k, $v := .Values.containerSensor.extraEnvs }}
+            - name: {{ $k }}
+              value: {{ $v }}
+              {{- end}}
+            {{- end }}
+{{- end }}

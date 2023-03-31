@@ -1,0 +1,235 @@
+## Darktrace containerSensor Helm Chart Values
+## Ref: https://hub.docker.com/r/darktrace/ossensor
+## Ref: https://hub.docker.com/r/darktrace/containersensor
+
+## -----------------------------------------------------------------
+## MANDATORY VALUES: Must be provided for successful installation
+## -----------------------------------------------------------------
+
+# -- vSensor configured HMAC key
+vSensorHmacKey: ""
+
+# -- vSensor Hostname
+vSensorHostname: ""
+
+# -- vSensor Port
+vSensorPort: "443"
+
+# -- vSensor Pull Token if pull-mode is configured
+darktraceToken: ""
+
+
+## ------------------------------------------------------------------
+## OPTIONAL VALUES: Can be modified to suit your requirements
+## ------------------------------------------------------------------
+
+nameOverride: ""
+
+containerSensor:
+
+  # -- Creates containerSensor Deployment
+  create: true
+
+  # Modify image values if opting to host in your own registry 
+  image:
+    # -- Image name
+    name: darktrace/containersensor
+    # -- Image tag
+    tag: "latest"
+    # -- Image pullPolicy
+    pullPolicy: Always
+    # -- Image pullSecret
+    pullSecrets: {}
+      # - "regcred"
+
+  # -- Set number of replicas for containerSensor Deployment
+  podReplicas: "1"
+
+  # -- Labels added to containerSensor resources
+  labels: {}
+    # foo: bar
+
+  # -- Annotations added to containerSensor resources
+  annotations: {}
+    # foo: bar
+
+  config:
+    # -- Configuration for tracking by pod images in K8s
+    # @default -- Please consult values.yaml
+    defaultConfig: |
+      ## If this service is run as a deployment within a Kubernetes cluster, then the cluster itself
+      ## will provide API credentials. The following options are provided in order to facilitate gathering
+      ## this data from outside the cluster.
+      #control-plane-url: https://kubernetes-api-server
+      #ca-cert: /etc/ssl/kubernetes-ca-cert.crt
+      #authentication:
+      #  bearer: <private Kubernetes Bearer token>
+
+      ## If only a subset of a cluster's namespaces are to be tracked, specify them here
+      #namespaces:
+      #  - example-namespace
+      #  - another-example-namespace
+
+      verify-tls: true
+
+      ## The following sections are used to enhance Darktrace's understanding of Kubernetes "devices".
+      ## They both provide rules to transform Kubernetes pod JSON into a set of key->value metadata pairs.
+      ##   - the key part is provided statically through the `name` parameter in each array element.
+      ##   - the value part is dynamically scraped from locations provided in the `selectors` array and 
+      ##     these values obey similar syntax rules to the popular command-line JSON parsing tool `jq`. 
+      ##
+      ## tracking-metadata data is used to map traffic to a single device
+      ## label-data is used to annotate existing devices but does not directly impact tracking.
+      tracking-metadata:
+        # By convention, the hostname field within `tracking-metadata` will be used to annotate the
+        # created device within Darktrace.
+        - name: hostname
+          take-consistent-prefix: true
+          selectors:
+            #- .object.metadata.labels.app # Tracking can be performed on a human-set label 
+            - .object.metadata.ownerReferences[].name # ReplicaSet name
+            - .object.metadata.name # Pod name
+        # By convention, the `namespace` field will be displayed as a prefix to any hostname set using
+        # tracking-metadata. i.e. <Namespace>/<ApplicationName>
+        - name: namespace
+          selectors:
+            - .object.metadata.namespace
+      label-data:
+        # By convention, setting the `hostname` field within `label-data` will set the hostname
+        # associated with an IP within the context of a Darktrace device. By setting this to
+        # the pod name, the underlying pod will be visible for connection events and notice
+        # events when viewing a device's event log within the Darktrace Threat Visualizer.
+        - name: hostname
+          take-consistent-prefix: false # Setting this to false ensures that randomly generated suffixes are retained. e.g. pod-name-d34a2131-1fsd
+          selectors:
+            - .object.metadata.name # Name each interface using the Pod name.
+
+    # -- Set Provision Config Level
+    provisionConfig: 1
+
+  # -- Define extra environment variables for containerSensor Deployment
+  extraEnvs: []
+    # - name: FOO
+    #   value: bar
+
+  # -- Override resources for containerSensor Deployment
+  resources: {}
+    # requests:
+    #   cpu: 50m
+    #   memory: 50Mi
+    # limits:
+    #   cpu: 50m
+    #   memory: 50Mi
+
+  # -- Define nodeSelector for containerSensor Deployment
+  nodeSelector: {}
+    # foo: bar
+
+  # -- Define tolerations for containerSensor Deployment
+  tolerations: []
+    # - key: node-role.kubernetes.io/control-plane
+    #   operator: Exists
+    #   effect: NoSchedule
+
+  secret:
+    # -- Disable if creating the secret separate from Helm Chart installation
+    create: true
+
+  configMap:
+    # -- Creates containerSensor ConfigMap
+    create: true
+  
+  clusterRole:
+    # -- Creates containerSensor ClusterRole
+    create: true
+
+  clusterRoleBinding:
+    # -- Creates containerSensor ClusterRoleBinding
+    create: true
+
+  serviceAccount:
+    # -- Creates containerSensor ServiceAccount
+    create: true
+
+
+osSensor:
+
+  # -- Creates osSensor DaemonSet
+  create: true
+
+  # Modify image values if opting to host in your own registry 
+  image:
+    # -- Image name
+    name: darktrace/ossensor
+    # -- Image tag
+    tag: "latest"
+    # -- Image pullPolicy
+    pullPolicy: Always
+    # -- Image pullSecret
+    pullSecrets: {}
+      # - "regcred"
+
+  # -- Labels added to the osSensor resources
+  labels: {}
+    # foo: bar
+
+  # -- Annotations added to the osSensor resources
+  annotations: {}
+    # foo: bar
+
+  config:
+
+    antigena:
+      # -- Boolean value to enable Antigena capabilities
+      enabled: false
+      # -- Time period in seconds between sending Antigena actions to the vSensor
+      # timePeriod: 5
+
+    # -- Log Verbosity 
+    logLevel: 2
+    # -- Path for generated config file
+    configPath: ""
+
+    networking:
+      interfaces:
+        # -- List of Network Interfaces to exclude
+        exclude:
+         - ^veth
+
+        # -- List of Network Interfaces to include
+        include:
+          - ^eth
+
+      # -- Device to capture from
+      captureDevice: ""
+        
+      # -- Berkeley Packet Filter to apply
+      bpf: not port 80
+  
+  # -- Define extra environment variables for osSensor DaemonSet
+  extraEnvs: []
+    # - name: FOO
+    #   value: bar
+
+  # -- Override resources for osSensor DaemonSet
+  resources: {}
+    # requests:
+    #   cpu: 50m
+    #   memory: 50Mi
+    # limits:
+    #   cpu: 50m
+    #   memory: 50Mi
+
+  # -- Define nodeSelector for osSensor DaemonSet
+  nodeSelector: {}
+    # foo: bar
+
+  # -- Define tolerations for osSensor DaemonSet
+  tolerations: []
+    # - key: node-role.kubernetes.io/control-plane
+    #   operator: Exists
+    #   effect: NoSchedule
+
+  secret:
+    # -- Disable if creating the secret separate from Helm Chart installation
+    create: true
