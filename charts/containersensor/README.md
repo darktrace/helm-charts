@@ -4,7 +4,7 @@ Used by Darktrace/DETECT customers to install containerSensor & optionally osSen
 
 ![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
-## Pre-requisites
+## Prerequisites
 
 To install this Helm Chart, you must be an active Darktrace customer with a vSensor installed in the same network as the Kubernetes cluster which will be monitored.
 
