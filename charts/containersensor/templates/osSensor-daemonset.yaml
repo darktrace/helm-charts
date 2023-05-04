@@ -1,3 +1,4 @@
+{{- if .Values.osSensor.create }}
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
@@ -98,3 +99,4 @@ spec:
           value: "{{ $v }}"
           {{- end}}
         {{- end }}
+{{- end }}
