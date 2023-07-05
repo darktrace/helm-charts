@@ -15,10 +15,6 @@ vSensorHostname: ""
 # -- vSensor Port
 vSensorPort: "443"
 
-# -- vSensor Pull Token if pull-mode is configured
-darktraceToken: ""
-
-
 ## ------------------------------------------------------------------
 ## OPTIONAL VALUES: Can be modified to suit your requirements
 ## ------------------------------------------------------------------
@@ -134,6 +130,8 @@ containerSensor:
   secret:
     # -- Disable if creating the secret separate from Helm Chart installation
     create: true
+    # -- Optional override for the Darktrace Token value used by containerSensor
+    overrideValue: ""
 
   configMap:
     # -- Creates containerSensor ConfigMap
@@ -162,7 +160,7 @@ osSensor:
     # -- Image name
     name: darktrace/ossensor
     # -- Image tag
-    tag: "latest"
+    tag: "6"
     # -- Image pullPolicy
     pullPolicy: Always
     # -- Image pullSecret
@@ -204,7 +202,7 @@ osSensor:
       captureDevice: ""
         
       # -- Berkeley Packet Filter to apply
-      bpf: not port 80
+      bpf: ""
   
   # -- Define extra environment variables for osSensor DaemonSet
   extraEnvs: []

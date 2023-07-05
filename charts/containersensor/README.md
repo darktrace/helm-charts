@@ -2,7 +2,7 @@
 
 Used by Darktrace/DETECT customers to install containerSensor & optionally osSensor in their Kubernetes clusters
 
-![Version: 1.0.1](https://img.shields.io/badge/Version-1.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.0.2](https://img.shields.io/badge/Version-1.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 ## Prerequisites
 
@@ -16,8 +16,7 @@ helm install containersensor darktrace/containersensor \
     --namespace darktrace \
     --create-namespace \
     --set vSensorHmacKey=<vSensor configured HMAC key> \
-    --set vSensorHostname=<vSensor Hostname> \
-    --set darktraceToken=<vSensor Pull Token>
+    --set vSensorHostname=<vSensor Hostname>
 ```
 
 ## Values
@@ -41,15 +40,15 @@ helm install containersensor darktrace/containersensor \
 | containerSensor.podReplicas | string | `"1"` | Set number of replicas for containerSensor Deployment |
 | containerSensor.resources | object | `{}` | Override resources for containerSensor Deployment |
 | containerSensor.secret.create | bool | `true` | Disable if creating the secret separate from Helm Chart installation |
+| containerSensor.secret.overrideValue | string | `""` | Optional override for the Darktrace Token value used by containerSensor |
 | containerSensor.serviceAccount.create | bool | `true` | Creates containerSensor ServiceAccount |
 | containerSensor.tolerations | list | `[]` | Define tolerations for containerSensor Deployment |
-| darktraceToken | string | `""` | vSensor Pull Token if pull-mode is configured |
 | nameOverride | string | `""` |  |
 | osSensor.annotations | object | `{}` | Annotations added to the osSensor resources |
 | osSensor.config.antigena.enabled | bool | `false` | Boolean value to enable Antigena capabilities |
 | osSensor.config.configPath | string | `""` | Path for generated config file |
 | osSensor.config.logLevel | int | `2` | Log Verbosity  |
-| osSensor.config.networking.bpf | string | `"not port 80"` | Berkeley Packet Filter to apply |
+| osSensor.config.networking.bpf | string | `""` | Berkeley Packet Filter to apply |
 | osSensor.config.networking.captureDevice | string | `""` | Device to capture from |
 | osSensor.config.networking.interfaces.exclude | list | `["^veth"]` | List of Network Interfaces to exclude |
 | osSensor.config.networking.interfaces.include | list | `["^eth"]` | List of Network Interfaces to include |
@@ -58,7 +57,7 @@ helm install containersensor darktrace/containersensor \
 | osSensor.image.name | string | `"darktrace/ossensor"` | Image name |
 | osSensor.image.pullPolicy | string | `"Always"` | Image pullPolicy |
 | osSensor.image.pullSecrets | object | `{}` | Image pullSecret |
-| osSensor.image.tag | string | `"latest"` | Image tag |
+| osSensor.image.tag | string | `"6"` | Image tag |
 | osSensor.labels | object | `{}` | Labels added to the osSensor resources |
 | osSensor.nodeSelector | object | `{}` | Define nodeSelector for osSensor DaemonSet |
 | osSensor.resources | object | `{}` | Override resources for osSensor DaemonSet |
