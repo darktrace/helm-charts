@@ -67,6 +67,8 @@ spec:
               value: "{{ .Values.containerSensor.config.provisionConfig }}"
             - name: DARKTRACE_URL
               value: {{ .Values.vSensorHostname }}
+            - name: DARKTRACE_VERIFY
+              value: {{ .Values.vSensorVerifyCertificate | quote }}
             - name: DARKTRACE_TOKEN
               valueFrom:
                 secretKeyRef:

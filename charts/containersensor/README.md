@@ -2,7 +2,7 @@
 
 Used by Darktrace/DETECT customers to install containerSensor & optionally osSensor in their Kubernetes clusters
 
-![Version: 1.0.2](https://img.shields.io/badge/Version-1.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 ## Prerequisites
 
@@ -66,3 +66,4 @@ helm install containersensor darktrace/containersensor \
 | vSensorHmacKey | string | `""` | vSensor configured HMAC key |
 | vSensorHostname | string | `""` | vSensor Hostname |
 | vSensorPort | string | `"443"` | vSensor Port |
+| vSensorVerifyCertificate | bool | `true` |  |

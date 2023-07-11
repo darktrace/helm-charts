@@ -19,6 +19,7 @@ vSensorPort: "443"
 ## OPTIONAL VALUES: Can be modified to suit your requirements
 ## ------------------------------------------------------------------
 
+vSensorVerifyCertificate: true
 nameOverride: ""
 
 containerSensor:
@@ -77,14 +78,6 @@ containerSensor:
       ## tracking-metadata data is used to map traffic to a single device
       ## label-data is used to annotate existing devices but does not directly impact tracking.
       tracking-metadata:
-        # By convention, the hostname field within `tracking-metadata` will be used to annotate the
-        # created device within Darktrace.
-        - name: hostname
-          take-consistent-prefix: true
-          selectors:
-            #- .object.metadata.labels.app # Tracking can be performed on a human-set label 
-            - .object.metadata.ownerReferences[].name # ReplicaSet name
-            - .object.metadata.name # Pod name
         # By convention, the `namespace` field will be displayed as a prefix to any hostname set using
         # tracking-metadata. i.e. <Namespace>/<ApplicationName>
         - name: namespace
