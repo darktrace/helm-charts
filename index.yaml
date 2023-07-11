@@ -2,6 +2,29 @@ apiVersion: v1
 entries:
   containersensor:
   - apiVersion: v2
+    created: "2023-07-11T15:39:37.108694602Z"
+    description: Used by Darktrace/DETECT customers to install containerSensor & optionally
+      osSensor in their Kubernetes clusters
+    digest: 989a0abfad1e860ac0271759c737f05390ba44d7cef867474f33f548a3a0b0f6
+    icon: https://avatars.githubusercontent.com/u/54311122?s=200&v=4
+    keywords:
+    - Darktrace
+    - DETECT
+    - containerSensor
+    - osSensor
+    maintainers:
+    - email: support@darktrace.com
+      name: Darktrace
+      url: https://darktrace.com
+    name: containersensor
+    sources:
+    - https://hub.docker.com/r/darktrace/containersensor
+    - https://hub.docker.com/r/darktrace/ossensor
+    type: application
+    urls:
+    - https://github.com/darktrace-com/helm-charts/releases/download/containersensor-1.0.3/containersensor-1.0.3.tgz
+    version: 1.0.3
+  - apiVersion: v2
     created: "2023-07-05T08:35:12.466619621Z"
     description: Used by Darktrace/DETECT customers to install containerSensor & optionally
       osSensor in their Kubernetes clusters
@@ -70,4 +93,4 @@ entries:
     urls:
     - https://github.com/darktrace-com/helm-charts/releases/download/containersensor-1.0.0/containersensor-1.0.0.tgz
     version: 1.0.0
-generated: "2023-07-05T08:35:12.466637922Z"
+generated: "2023-07-11T15:39:37.108715902Z"
