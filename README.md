@@ -19,8 +19,7 @@ $ helm install containersensor darktrace/containersensor \
     --namespace darktrace \
     --create-namespace \
     --set vSensorHmacKey=<vSensor configured HMAC key> \
-    --set vSensorHostname=<vSensor Hostname> \
-    --set darktraceToken=<vSensor Pull Token>
+    --set vSensorHostname=<vSensor Hostname>
 
 # View chart status
 $ helm status containersensor --namespace darktrace
