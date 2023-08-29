@@ -32,7 +32,7 @@ containerSensor:
     # -- Image name
     name: darktrace/containersensor
     # -- Image tag
-    tag: "latest"
+    tag: "1"
     # -- Image pullPolicy
     pullPolicy: Always
     # -- Image pullSecret

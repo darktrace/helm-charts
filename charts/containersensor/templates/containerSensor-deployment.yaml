@@ -44,10 +44,10 @@ spec:
           {{- else }}
             requests:
               cpu: 200m
-              memory: 64Mi
+              memory: 256Mi
             limits:
               cpu: 200m
-              memory: 64Mi
+              memory: 256Mi
           {{- end }}
           volumeMounts:
             - name: subscriber-config

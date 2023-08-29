@@ -2,7 +2,7 @@
 
 Used by Darktrace/DETECT customers to install containerSensor & optionally osSensor in their Kubernetes clusters
 
-![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.0.4](https://img.shields.io/badge/Version-1.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 ## Prerequisites
 
@@ -34,7 +34,7 @@ helm install containersensor darktrace/containersensor \
 | containerSensor.image.name | string | `"darktrace/containersensor"` | Image name |
 | containerSensor.image.pullPolicy | string | `"Always"` | Image pullPolicy |
 | containerSensor.image.pullSecrets | object | `{}` | Image pullSecret |
-| containerSensor.image.tag | string | `"latest"` | Image tag |
+| containerSensor.image.tag | string | `"1"` | Image tag |
 | containerSensor.labels | object | `{}` | Labels added to containerSensor resources |
 | containerSensor.nodeSelector | object | `{}` | Define nodeSelector for containerSensor Deployment |
 | containerSensor.podReplicas | string | `"1"` | Set number of replicas for containerSensor Deployment |
