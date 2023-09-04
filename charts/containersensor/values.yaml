@@ -160,6 +160,17 @@ osSensor:
     pullSecrets: {}
       # - "regcred"
 
+  windowsImage:
+    # -- Image name
+    name: darktrace/ossensor-windows
+    # -- Image tag
+    tag: "6"
+    # -- Image pullPolicy
+    pullPolicy: Always
+    # -- Image pullSecret
+    pullSecrets: {}
+      # - "regcred"
+
   # -- Labels added to the osSensor resources
   labels: {}
     # foo: bar
@@ -199,8 +210,8 @@ osSensor:
   
   # -- Define extra environment variables for osSensor DaemonSet
   extraEnvs: []
-    # - name: FOO
-    #   value: bar
+    # - name: WINDOWS_INTERFACE_CAPTURE_CIDR
+    #   value: 10.0.0.0/8
 
   # -- Override resources for osSensor DaemonSet
   resources: {}

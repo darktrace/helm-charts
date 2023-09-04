@@ -1,8 +1,8 @@
-{{- if .Values.osSensor.create }}
+{{- if and (semverCompare ">=1.26" .Capabilities.KubeVersion.Version) (.Values.osSensor.create) }}
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: darktrace-ossensor
+  name: darktrace-ossensor-windows
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "containersensor.labels" . | nindent 4 }}
@@ -13,16 +13,16 @@ metadata:
 spec:
   selector:
     matchLabels:
-      name: darktrace-ossensor
+      name: darktrace-ossensor-windows
       {{- include "containersensor.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        name: darktrace-ossensor
+        name: darktrace-ossensor-windows
         {{- include "containersensor.selectorLabels" . | nindent 8 }}
     spec:
       nodeSelector:
-        kubernetes.io/os: linux
+        kubernetes.io/os: windows
       {{- with .Values.osSensor.nodeSelector }}
         {{- . | toYaml | nindent 8 }}
       {{- end }}
@@ -34,11 +34,11 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
       - name: ossensor
-        image: {{ .Values.osSensor.image.name }}:{{ .Values.osSensor.image.tag }}
-        imagePullPolicy: {{ .Values.osSensor.image.pullPolicy }}
-        {{- if .Values.osSensor.image.pullSecrets }}
+        image: {{ .Values.osSensor.windowsImage.name }}:{{ .Values.osSensor.windowsImage.tag }}
+        imagePullPolicy: {{ .Values.osSensor.windowsImage.pullPolicy }}
+        {{- if .Values.osSensor.windowsImage.pullSecrets }}
         imagePullSecrets:
-          {{- range .Values.osSensor.image.pullSecrets }}
+          {{- range .Values.osSensor.windowsImage.pullSecrets }}
           - {{.}}
           {{- end }}
         {{- end }}
@@ -54,6 +54,9 @@ spec:
             memory: 256Mi
         {{- end }}
         securityContext:
+          windowsOptions:
+            hostProcess: true
+            runAsUserName: "NT AUTHORITY\\SYSTEM"
           allowPrivilegeEscalation: false
           capabilities:
             drop:

@@ -2,7 +2,7 @@
 
 Used by Darktrace/DETECT customers to install containerSensor & optionally osSensor in their Kubernetes clusters
 
-![Version: 1.0.4](https://img.shields.io/badge/Version-1.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.0.5](https://img.shields.io/badge/Version-1.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 ## Prerequisites
 
@@ -63,6 +63,10 @@ helm install containersensor darktrace/containersensor \
 | osSensor.resources | object | `{}` | Override resources for osSensor DaemonSet |
 | osSensor.secret.create | bool | `true` | Disable if creating the secret separate from Helm Chart installation |
 | osSensor.tolerations | list | `[]` | Define tolerations for osSensor DaemonSet |
+| osSensor.windowsImage.name | string | `"darktrace/ossensor-windows"` | Image name |
+| osSensor.windowsImage.pullPolicy | string | `"Always"` | Image pullPolicy |
+| osSensor.windowsImage.pullSecrets | object | `{}` | Image pullSecret |
+| osSensor.windowsImage.tag | string | `"6"` | Image tag |
 | vSensorHmacKey | string | `""` | vSensor configured HMAC key |
 | vSensorHostname | string | `""` | vSensor Hostname |
 | vSensorPort | string | `"443"` | vSensor Port |

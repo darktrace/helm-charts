@@ -22,6 +22,15 @@ spec:
         app: darktrace-containersensor
         {{- include "containersensor.selectorLabels" . | nindent 8 }}
     spec:
+      nodeSelector:
+        kubernetes.io/os: linux
+      {{- with .Values.containerSensor.nodeSelector }}
+        {{- . | toYaml | nindent 8 }}
+      {{- end }}
+      {{- with .Values.containerSensor.tolerations }}
+      tolerations:
+        {{- . | toYaml | nindent 6 }}
+      {{- end }}
       serviceAccountName: darktrace-containersensor
       automountServiceAccountToken: true
       volumes:
@@ -32,9 +41,9 @@ spec:
         - name: containersensor
           image: {{ .Values.containerSensor.image.name }}:{{ .Values.containerSensor.image.tag }}
           imagePullPolicy: {{ .Values.containerSensor.image.pullPolicy }}
-          {{- if .Values.containerSensor.pullSecrets }}
+          {{- if .Values.containerSensor.image.pullSecrets }}
           imagePullSecrets:
-            {{- range .Values.containerSensor.pullSecrets }}
+            {{- range .Values.containerSensor.image.pullSecrets }}
             - {{.}}
             {{- end }}
           {{- end }}
