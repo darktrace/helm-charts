@@ -120,6 +120,17 @@ containerSensor:
     #   operator: Exists
     #   effect: NoSchedule
 
+  # -- Define affinity for containerSensor Deployment
+  affinity: {}
+    # nodeAffinity:
+    #   requiredDuringSchedulingIgnoredDuringExecution:
+    #     nodeSelectorTerms:
+    #     - matchExpressions:
+    #       - key: kubernetes.io/my-label
+    #         operator: In
+    #         values:
+    #         - example
+
   secret:
     # -- Disable if creating the secret separate from Helm Chart installation
     create: true
@@ -226,11 +237,20 @@ osSensor:
   nodeSelector: {}
     # foo: bar
 
-  # -- Define tolerations for osSensor DaemonSet
-  tolerations: []
-    # - key: node-role.kubernetes.io/control-plane
-    #   operator: Exists
-    #   effect: NoSchedule
+  # -- Define tolerations for osSensor DaemonSet, default all tolerations
+  tolerations:
+    - operator: Exists
+
+  # -- Define affinity for osSensor Daemonset
+  affinity: {}
+    # nodeAffinity:
+    #   requiredDuringSchedulingIgnoredDuringExecution:
+    #     nodeSelectorTerms:
+    #     - matchExpressions:
+    #       - key: kubernetes.io/my-label
+    #         operator: In
+    #         values:
+    #         - example
 
   secret:
     # -- Disable if creating the secret separate from Helm Chart installation

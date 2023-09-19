@@ -2,7 +2,7 @@
 
 Used by Darktrace/DETECT customers to install containerSensor & optionally osSensor in their Kubernetes clusters
 
-![Version: 1.0.5](https://img.shields.io/badge/Version-1.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.0.6](https://img.shields.io/badge/Version-1.0.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 ## Prerequisites
 
@@ -23,6 +23,7 @@ helm install containersensor darktrace/containersensor \
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| containerSensor.affinity | object | `{}` | Define affinity for containerSensor Deployment |
 | containerSensor.annotations | object | `{}` | Annotations added to containerSensor resources |
 | containerSensor.clusterRole.create | bool | `true` | Creates containerSensor ClusterRole |
 | containerSensor.clusterRoleBinding.create | bool | `true` | Creates containerSensor ClusterRoleBinding |
@@ -44,6 +45,7 @@ helm install containersensor darktrace/containersensor \
 | containerSensor.serviceAccount.create | bool | `true` | Creates containerSensor ServiceAccount |
 | containerSensor.tolerations | list | `[]` | Define tolerations for containerSensor Deployment |
 | nameOverride | string | `""` |  |
+| osSensor.affinity | object | `{}` | Define affinity for osSensor Daemonset |
 | osSensor.annotations | object | `{}` | Annotations added to the osSensor resources |
 | osSensor.config.antigena.enabled | bool | `false` | Boolean value to enable Antigena capabilities |
 | osSensor.config.configPath | string | `""` | Path for generated config file |
@@ -62,7 +64,7 @@ helm install containersensor darktrace/containersensor \
 | osSensor.nodeSelector | object | `{}` | Define nodeSelector for osSensor DaemonSet |
 | osSensor.resources | object | `{}` | Override resources for osSensor DaemonSet |
 | osSensor.secret.create | bool | `true` | Disable if creating the secret separate from Helm Chart installation |
-| osSensor.tolerations | list | `[]` | Define tolerations for osSensor DaemonSet |
+| osSensor.tolerations | list | `[{"operator":"Exists"}]` | Define tolerations for osSensor DaemonSet, default all tolerations |
 | osSensor.windowsImage.name | string | `"darktrace/ossensor-windows"` | Image name |
 | osSensor.windowsImage.pullPolicy | string | `"Always"` | Image pullPolicy |
 | osSensor.windowsImage.pullSecrets | object | `{}` | Image pullSecret |

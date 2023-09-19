@@ -30,6 +30,10 @@ spec:
       tolerations:
         {{- . | toYaml | nindent 6 }}
       {{- end }}
+      {{- with .Values.osSensor.affinity }}
+      affinity:
+        {{- . | toYaml | nindent 6 }}
+      {{- end }}
       hostNetwork: true
       terminationGracePeriodSeconds: 30
       containers:
