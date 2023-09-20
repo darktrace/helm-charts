@@ -28,11 +28,11 @@ spec:
       {{- end }}
       {{- with .Values.osSensor.tolerations }}
       tolerations:
-        {{- . | toYaml | nindent 6 }}
+        {{- . | toYaml | nindent 8 }}
       {{- end }}
       {{- with .Values.osSensor.affinity }}
       affinity:
-        {{- . | toYaml | nindent 6 }}
+        {{- . | toYaml | nindent 8 }}
       {{- end }}
       hostNetwork: true
       terminationGracePeriodSeconds: 30
