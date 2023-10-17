@@ -206,8 +206,7 @@ osSensor:
     networking:
       interfaces:
         # -- List of Network Interfaces to exclude
-        exclude:
-         - ^veth
+        exclude: []
 
         # -- List of Network Interfaces to include
         include:

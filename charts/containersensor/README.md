@@ -2,7 +2,7 @@
 
 Used by Darktrace/DETECT customers to install containerSensor & optionally osSensor in their Kubernetes clusters
 
-![Version: 1.0.7](https://img.shields.io/badge/Version-1.0.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.0.8](https://img.shields.io/badge/Version-1.0.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 ## Prerequisites
 
@@ -52,7 +52,7 @@ helm install containersensor darktrace/containersensor \
 | osSensor.config.logLevel | int | `2` | Log Verbosity  |
 | osSensor.config.networking.bpf | string | `""` | Berkeley Packet Filter to apply |
 | osSensor.config.networking.captureDevice | string | `""` | Device to capture from |
-| osSensor.config.networking.interfaces.exclude | list | `["^veth"]` | List of Network Interfaces to exclude |
+| osSensor.config.networking.interfaces.exclude | list | `[]` | List of Network Interfaces to exclude |
 | osSensor.config.networking.interfaces.include | list | `["^eth"]` | List of Network Interfaces to include |
 | osSensor.create | bool | `true` | Creates osSensor DaemonSet |
 | osSensor.extraEnvs | list | `[]` | Define extra environment variables for osSensor DaemonSet |
