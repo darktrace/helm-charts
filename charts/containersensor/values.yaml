@@ -30,7 +30,7 @@ containerSensor:
   # Modify image values if opting to host in your own registry 
   image:
     # -- Image name
-    name: darktrace/containersensor
+    name: public.ecr.aws/darktrace/containersensor
     # -- Image tag
     tag: "1"
     # -- Image pullPolicy
@@ -162,7 +162,7 @@ osSensor:
   # Modify image values if opting to host in your own registry 
   image:
     # -- Image name
-    name: darktrace/ossensor
+    name: public.ecr.aws/darktrace/ossensor
     # -- Image tag
     tag: "6"
     # -- Image pullPolicy
@@ -173,7 +173,7 @@ osSensor:
 
   windowsImage:
     # -- Image name
-    name: darktrace/ossensor-windows
+    name: public.ecr.aws/darktrace/ossensor-windows
     # -- Image tag
     tag: "6"
     # -- Image pullPolicy

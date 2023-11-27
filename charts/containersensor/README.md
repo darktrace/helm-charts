@@ -2,7 +2,7 @@
 
 Used by Darktrace/DETECT customers to install containerSensor & optionally osSensor in their Kubernetes clusters
 
-![Version: 1.0.8](https://img.shields.io/badge/Version-1.0.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.0.9](https://img.shields.io/badge/Version-1.0.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 ## Prerequisites
 
@@ -11,7 +11,7 @@ To install this Helm Chart, you must be an active Darktrace customer with a vSen
 ## Installation Instructions
 
 ```console
-helm repo add darktrace https://darktrace-com.github.io/helm-charts
+helm repo add darktrace https://darktrace.github.io/helm-charts
 helm install containersensor darktrace/containersensor \
     --namespace darktrace \
     --create-namespace \
@@ -32,7 +32,7 @@ helm install containersensor darktrace/containersensor \
 | containerSensor.configMap.create | bool | `true` | Creates containerSensor ConfigMap |
 | containerSensor.create | bool | `true` | Creates containerSensor Deployment |
 | containerSensor.extraEnvs | list | `[]` | Define extra environment variables for containerSensor Deployment |
-| containerSensor.image.name | string | `"darktrace/containersensor"` | Image name |
+| containerSensor.image.name | string | `"public.ecr.aws/darktrace/containersensor"` | Image name |
 | containerSensor.image.pullPolicy | string | `"Always"` | Image pullPolicy |
 | containerSensor.image.pullSecrets | object | `{}` | Image pullSecret |
 | containerSensor.image.tag | string | `"1"` | Image tag |
@@ -56,7 +56,7 @@ helm install containersensor darktrace/containersensor \
 | osSensor.config.networking.interfaces.include | list | `["^eth"]` | List of Network Interfaces to include |
 | osSensor.create | bool | `true` | Creates osSensor DaemonSet |
 | osSensor.extraEnvs | list | `[]` | Define extra environment variables for osSensor DaemonSet |
-| osSensor.image.name | string | `"darktrace/ossensor"` | Image name |
+| osSensor.image.name | string | `"public.ecr.aws/darktrace/ossensor"` | Image name |
 | osSensor.image.pullPolicy | string | `"Always"` | Image pullPolicy |
 | osSensor.image.pullSecrets | object | `{}` | Image pullSecret |
 | osSensor.image.tag | string | `"6"` | Image tag |
@@ -65,7 +65,7 @@ helm install containersensor darktrace/containersensor \
 | osSensor.resources | object | `{}` | Override resources for osSensor DaemonSet |
 | osSensor.secret.create | bool | `true` | Disable if creating the secret separate from Helm Chart installation |
 | osSensor.tolerations | list | `[{"operator":"Exists"}]` | Define tolerations for osSensor DaemonSet, default all tolerations |
-| osSensor.windowsImage.name | string | `"darktrace/ossensor-windows"` | Image name |
+| osSensor.windowsImage.name | string | `"public.ecr.aws/darktrace/ossensor-windows"` | Image name |
 | osSensor.windowsImage.pullPolicy | string | `"Always"` | Image pullPolicy |
 | osSensor.windowsImage.pullSecrets | object | `{}` | Image pullSecret |
 | osSensor.windowsImage.tag | string | `"6"` | Image tag |

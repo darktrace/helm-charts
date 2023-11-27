@@ -6,7 +6,7 @@ icon: https://avatars.githubusercontent.com/u/54311122?s=200&v=4
 
 type: application
 
-version: 1.0.8
+version: 1.0.9
 
 keywords:
   - Darktrace
@@ -15,8 +15,8 @@ keywords:
   - osSensor
 
 sources:
-  - https://hub.docker.com/r/darktrace/containersensor
-  - https://hub.docker.com/r/darktrace/ossensor
+  - https://gallery.ecr.aws/darktrace/containersensor
+  - https://gallery.ecr.aws/darktrace/ossensor
 
 maintainers:
   - name: Darktrace
