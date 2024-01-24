@@ -48,7 +48,7 @@ spec:
         {{- end }}
         resources:
         {{- if .Values.osSensor.resources }}
-          {{ .Values.osSensor.resources | trim | toYaml | nindent 10 }}
+          {{ .Values.osSensor.resources | toYaml | nindent 10 }}
         {{- else }}
           requests:
             cpu: 200m

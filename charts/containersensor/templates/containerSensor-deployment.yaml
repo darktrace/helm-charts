@@ -53,7 +53,7 @@ spec:
           {{- end }}
           resources:
           {{- if .Values.containerSensor.resources }}
-            {{ .Values.containerSensor.resources | trim | toYaml | nindent 12 }}
+            {{ .Values.containerSensor.resources | toYaml | nindent 12 }}
           {{- else }}
             requests:
               cpu: 200m
