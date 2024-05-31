@@ -2,7 +2,7 @@
 
 Used by Darktrace/DETECT customers to install containerSensor & optionally osSensor in their Kubernetes clusters
 
-![Version: 1.0.10](https://img.shields.io/badge/Version-1.0.10-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 ## Prerequisites
 
@@ -39,7 +39,7 @@ helm install containersensor darktrace/containersensor \
 | containerSensor.labels | object | `{}` | Labels added to containerSensor resources |
 | containerSensor.nodeSelector | object | `{}` | Define nodeSelector for containerSensor Deployment |
 | containerSensor.podReplicas | string | `"1"` | Set number of replicas for containerSensor Deployment |
-| containerSensor.resources | object | `{}` | Override resources for containerSensor Deployment |
+| containerSensor.resources | object | `{}` | Set resources for containerSensor Deployment |
 | containerSensor.secret.create | bool | `true` | Disable if creating the secret separate from Helm Chart installation |
 | containerSensor.secret.overrideValue | string | `""` | Optional override for the Darktrace Token value used by containerSensor |
 | containerSensor.serviceAccount.create | bool | `true` | Creates containerSensor ServiceAccount |
@@ -62,7 +62,7 @@ helm install containersensor darktrace/containersensor \
 | osSensor.image.tag | string | `"6"` | Image tag |
 | osSensor.labels | object | `{}` | Labels added to the osSensor resources |
 | osSensor.nodeSelector | object | `{}` | Define nodeSelector for osSensor DaemonSet |
-| osSensor.resources | object | `{}` | Override resources for osSensor DaemonSet |
+| osSensor.resources | object | `{}` | Set resources for osSensor DaemonSet |
 | osSensor.secret.create | bool | `true` | Disable if creating the secret separate from Helm Chart installation |
 | osSensor.tolerations | list | `[{"operator":"Exists"}]` | Define tolerations for osSensor DaemonSet, default all tolerations |
 | osSensor.windowsImage.name | string | `"public.ecr.aws/darktrace/ossensor-windows"` | Image name |

@@ -46,16 +46,9 @@ spec:
           - {{.}}
           {{- end }}
         {{- end }}
-        resources:
         {{- if .Values.osSensor.resources }}
+        resources:
           {{ .Values.osSensor.resources | toYaml | nindent 10 }}
-        {{- else }}
-          requests:
-            cpu: 200m
-            memory: 256Mi
-          limits:
-            cpu: 200m
-            memory: 256Mi
         {{- end }}
         securityContext:
           allowPrivilegeEscalation: false
@@ -98,10 +91,7 @@ spec:
         - name: BPF
           value: "{{ . }}"
         {{- end }}
-        {{- if .Values.osSensor.extraEnvs }}
-          {{- range $k, $v := .Values.osSensor.extraEnvs }}
-        - name: {{ $k }}
-          value: "{{ $v }}"
-          {{- end}}
+        {{- with .Values.osSensor.extraEnvs }}
+          {{ toYaml . | nindent 8 }}
         {{- end }}
 {{- end }}

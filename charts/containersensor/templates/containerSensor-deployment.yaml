@@ -51,16 +51,9 @@ spec:
             - {{.}}
             {{- end }}
           {{- end }}
-          resources:
           {{- if .Values.containerSensor.resources }}
+          resources:
             {{ .Values.containerSensor.resources | toYaml | nindent 12 }}
-          {{- else }}
-            requests:
-              cpu: 200m
-              memory: 256Mi
-            limits:
-              cpu: 200m
-              memory: 256Mi
           {{- end }}
           volumeMounts:
             - name: subscriber-config
@@ -87,10 +80,7 @@ spec:
                 secretKeyRef:
                   name: darktrace-containersensor-secret
                   key: token
-            {{- if .Values.containerSensor.extraEnvs }}
-              {{- range $k, $v := .Values.containerSensor.extraEnvs }}
-            - name: {{ $k }}
-              value: {{ $v }}
-              {{- end}}
+            {{- with .Values.containerSensor.extraEnvs }}
+              {{ toYaml . | nindent 12 }}
             {{- end }}
 {{- end }}
