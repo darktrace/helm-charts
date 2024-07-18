@@ -212,6 +212,9 @@ osSensor:
         include:
           - ^eth
 
+        # -- Allows the osSensor to capture traffic on any new interface appearing after the osSensor container starts
+        any: true
+
       # -- Device to capture from
       captureDevice: ""
         

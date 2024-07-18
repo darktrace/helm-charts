@@ -87,6 +87,8 @@ spec:
           value: "{{ range .Values.osSensor.config.networking.interfaces.exclude }}{{ . }} {{ end -}}"
         - name: NETWORK_DEVICE_INCLUDELIST
           value: "{{ range .Values.osSensor.config.networking.interfaces.include }}{{ . }} {{ end -}}"
+        - name: NETWORK_DEVICE_ANY
+          value: "{{ if .Values.osSensor.config.networking.interfaces.any }}1{{ else }}0{{ end -}}"
         {{- with .Values.osSensor.config.networking.bpf }}
         - name: BPF
           value: "{{ . }}"
