@@ -50,6 +50,7 @@ spec:
         resources:
           {{ .Values.osSensor.resources | toYaml | nindent 10 }}
         {{- end }}
+        workingDir: C:\\hpc\\Darktrace
         securityContext:
           windowsOptions:
             hostProcess: true
