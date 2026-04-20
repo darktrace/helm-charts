@@ -2,7 +2,7 @@
 
 Used by Darktrace/DETECT customers to install containerSensor & optionally osSensor in their Kubernetes clusters
 
-![Version: 1.1.3](https://img.shields.io/badge/Version-1.1.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 ## Prerequisites
 
@@ -54,7 +54,7 @@ helm install containersensor darktrace/containersensor \
 | osSensor.config.networking.captureDevice | string | `""` | Device to capture from |
 | osSensor.config.networking.interfaces.any | bool | `true` | Allows the osSensor to capture traffic on any new interface appearing after the osSensor container starts |
 | osSensor.config.networking.interfaces.exclude | list | `[]` | List of Network Interfaces to exclude |
-| osSensor.config.networking.interfaces.include | list | `["^eth"]` | List of Network Interfaces to include |
+| osSensor.config.networking.interfaces.include | list | `[".*"]` | List of Network Interfaces to include |
 | osSensor.create | bool | `true` | Creates osSensor DaemonSet |
 | osSensor.extraEnvs | list | `[]` | Define extra environment variables for osSensor DaemonSet |
 | osSensor.image.name | string | `"public.ecr.aws/darktrace/ossensor"` | Image name |

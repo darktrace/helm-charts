@@ -210,7 +210,7 @@ osSensor:
 
         # -- List of Network Interfaces to include
         include:
-          - ^eth
+          - ".*"
 
         # -- Allows the osSensor to capture traffic on any new interface appearing after the osSensor container starts
         any: true
